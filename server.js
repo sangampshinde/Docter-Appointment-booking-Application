@@ -2,8 +2,12 @@ const express = require('express');
 require("dotenv").config()
 const dbConfig = require("./config/dbConfig")
 const app = express();
-
+app.use(express.json());
+const userRoute = require("./routes/userRoute");
 const port = process.env.PORT || 5000
+
+
+app.use('/api/users',userRoute)
 
 console.log(process.env.MONGO_URL)
 
