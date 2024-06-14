@@ -7,7 +7,7 @@ const userRoute = require("./routes/userRoute");
 const port = process.env.PORT || 5000
 
 
-app.use('/api/users',userRoute)
+app.use('/api/user',userRoute)
 
 console.log(process.env.MONGO_URL)
 
