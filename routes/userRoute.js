@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/userModel');//
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 router.post("/register", async (req,res) => {
   try {
@@ -31,9 +32,10 @@ router.post("/register", async (req,res) => {
 
 
 // login page logic 
-router.post("/login", async () => {
+router.post("/login", async (req,res) => {
+   console.log(req.body.email);
   try {
-    const user= await User.findOne({email:req.body.email});
+    const user= await User.findOne({email: req.body.email});
     // if user not found
     if(!user) {
       return res.status(200).send({message: 'User not found',success: false});
