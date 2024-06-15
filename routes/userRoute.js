@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../models/userModel');
+const User = require('../models/userModel');//
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.post("/register", async (req,res) => {
   try {
@@ -26,8 +27,14 @@ router.post("/register", async (req,res) => {
   }
 });
 
+// login page logic 
 router.post("/login", async () => {
   try {
+    const user= await User.findOne({email:req.body.email});
+    // if user not found
+    if(!user) {
+      return res.status(200).send({message: 'User not found',success: false});
+    }
 
   } catch (error) {
 
