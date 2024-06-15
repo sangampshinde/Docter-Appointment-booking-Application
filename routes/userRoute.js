@@ -22,10 +22,13 @@ router.post("/register", async (req,res) => {
     
 
   } catch (error) {
+    console.log(error);
      res.status(500).send({message:'error creating user',sucess:false,error});
 
   }
 });
+
+
 
 // login page logic 
 router.post("/login", async () => {
@@ -35,8 +38,24 @@ router.post("/login", async () => {
     if(!user) {
       return res.status(200).send({message: 'User not found',success: false});
     }
+    // comparing becrypt password with user enter password  parameters are just like(normal password,database password)
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+    if(!isMatch){
+      return res.status(200).send({message: 'Invalid password',success: false});
+    }else{
+      // generating token
+      // here we need to generate the token first parameter is payload and second parameter is secret key
+      // jwtsign is method to generate token
+      const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET,{
+        expiresIn: "1h"
+      });
+      res.status(200).send({message: 'User logged in successfully',success: true, data:token}); 
+    }
 
   } catch (error) {
+    console.log(error);
+    res.status(500).send({message: "error in login",success: false,error: error});
 
   }
 });
