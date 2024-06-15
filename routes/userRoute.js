@@ -29,8 +29,6 @@ router.post("/register", async (req,res) => {
   }
 });
 
-
-
 // login page logic 
 router.post("/login", async (req,res) => {
    console.log(req.body.email);
@@ -62,4 +60,12 @@ router.post("/login", async (req,res) => {
   }
 });
 
+router.post("get-user-info-by-id",async (req, res)=> {
+  try {
+    
+  } catch (error) {
+    
+  }
+
+})
 module.exports = router;
